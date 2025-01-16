@@ -1,0 +1,3 @@
+[submodule "ventura-client-gateway"]
+	path = ventura-client-gateway
+	url = git@github.com:claudiocoder/Ventura-client-gateway.git
