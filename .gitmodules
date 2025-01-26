@@ -4,3 +4,6 @@
 [submodule "ventura-auth"]
 	path = ventura-auth
 	url = git@github.com:claudiocoder/Ventura-auth.git
+[submodule "venturaUI"]
+	path = venturaUI
+	url = git@github.com:claudiocoder/venturaUI.git
