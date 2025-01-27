@@ -8,12 +8,10 @@ services:
   client-gateway:
     build: 
       context: ./ventura-client-gateway
-      target: development
+      dockerfile: dockerfile.prod
+    image: ventura-client-gateway-production
     ports:
-      - "${CLIENT_GATEWAY_PORT}:3001"
-    volumes:
-      - ./ventura-client-gateway/src:/usr/src/app/src
-    command: npm run start:dev
+      - "${CLIENT_GATEWAY_PORT}:${CLIENT_GATEWAY_PORT}"
     environment:
       - PORT=3001
       - NATS_SERVERS=nats://nats-server:4222
@@ -21,10 +19,8 @@ services:
   auth-ms:
     build: 
       context: ./ventura-auth
-      target: development
-    volumes:
-      - ./ventura-auth/src:/usr/src/app/src
-    command: npm run start:dev
+      dockerfile: dockerfile.prod
+    image: ventura-auth-production
     environment:
       - PORT=3001
       - NATS_SERVERS=nats://nats-server:4222
@@ -32,11 +28,13 @@ services:
   ventura-ui:
     build: 
       context: ./ventura-ui
+      dockerfile: dockerfile.prod
     ports:
-      - "${VENTURA_UI_PORT}:3000"
+      - "${VENTURA_UI_PORT}:${VENTURA_UI_PORT}"
+    image: ventura-ui-production
     volumes:
       - ./ventura-ui/src:/usr/src/app/src
-    command: npm run dev
+    command: npm run start
     environment:
       - NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=${NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}	
       - CLERK_SECRET_KEY=${CLERK_SECRET_KEY}
