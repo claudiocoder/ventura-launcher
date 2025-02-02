@@ -5,7 +5,7 @@ services:
     ports:
       - "8222:8222"
 
-  client-gateway:
+  client-gateway-dev:
     build: 
       context: ./ventura-client-gateway
       target: development
@@ -18,7 +18,7 @@ services:
       - PORT=3001
       - NATS_SERVERS=nats://nats-server:4222
 
-  auth-ms:
+  auth-ms-dev:
     build: 
       context: ./ventura-auth
       target: development
@@ -29,7 +29,7 @@ services:
       - PORT=3001
       - NATS_SERVERS=nats://nats-server:4222
 
-  ventura-ui:
+  ventura-ui-dev:
     build: 
       context: ./ventura-ui
     ports:
