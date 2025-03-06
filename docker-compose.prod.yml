@@ -1,11 +1,13 @@
 version: '3'
 services:
   nats-server:
+    container_name: nats-server-production
     image: nats:latest
     ports:
       - "8222:8222"
 
   client-gateway:
+    container_name: client-gateway-production
     build: 
       context: ./ventura-client-gateway
       dockerfile: dockerfile.prod
@@ -13,10 +15,11 @@ services:
     ports:
       - "${CLIENT_GATEWAY_PORT}:${CLIENT_GATEWAY_PORT}"
     environment:
-      - PORT=3001
+      - PORT=3000
       - NATS_SERVERS=nats://nats-server:4222
 
   auth-ms:
+    container_name: auth-ms-production
     build: 
       context: ./ventura-auth
       dockerfile: dockerfile.prod
@@ -25,21 +28,21 @@ services:
       - PORT=3001
       - NATS_SERVERS=nats://nats-server:4222
 
-  ventura-ui:
-    build: 
-      context: ./ventura-ui
-      dockerfile: dockerfile.prod
-    ports:
-      - "${VENTURA_UI_PORT}:${VENTURA_UI_PORT}"
-    image: ventura-ui-production
-    volumes:
-      - ./ventura-ui/src:/usr/src/app/src
-    command: npm run start
-    environment:
-      - NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=${NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}	
-      - CLERK_SECRET_KEY=${CLERK_SECRET_KEY}
-      - CLERK_SIGN_IN_FORCE_REDIRECT_URL=${CLERK_SIGN_IN_FORCE_REDIRECT_URL}
-      - CLERK_SIGN_UP_FORCE_REDIRECT_URL=${CLERK_SIGN_UP_FORCE_REDIRECT_URL}
-      - CLERK_SIGN_IN_FALLBACK_REDIRECT_URL=${CLERK_SIGN_IN_FALLBACK_REDIRECT_URL}
-      - CLERK_SIGN_UP_FALLBACK_REDIRECT_URL=${CLERK_SIGN_UP_FALLBACK_REDIRECT_URL}
-    restart: unless-stopped
+  # ventura-ui:
+  #   build: 
+  #     context: ./ventura-ui
+  #     dockerfile: dockerfile.prod
+  #   ports:
+  #     - "${VENTURA_UI_PORT}:${VENTURA_UI_PORT}"
+  #   image: ventura-ui-production
+  #   volumes:
+  #     - ./ventura-ui/src:/usr/src/app/src
+  #   command: npm run start
+  #   environment:
+  #     - NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=${NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}	
+  #     - CLERK_SECRET_KEY=${CLERK_SECRET_KEY}
+  #     - CLERK_SIGN_IN_FORCE_REDIRECT_URL=${CLERK_SIGN_IN_FORCE_REDIRECT_URL}
+  #     - CLERK_SIGN_UP_FORCE_REDIRECT_URL=${CLERK_SIGN_UP_FORCE_REDIRECT_URL}
+  #     - CLERK_SIGN_IN_FALLBACK_REDIRECT_URL=${CLERK_SIGN_IN_FALLBACK_REDIRECT_URL}
+  #     - CLERK_SIGN_UP_FALLBACK_REDIRECT_URL=${CLERK_SIGN_UP_FALLBACK_REDIRECT_URL}
+  #   restart: unless-stopped
