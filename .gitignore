@@ -1,3 +1,7 @@
 .env
 
 node_modules/
+# Prisma
+prisma/migrations/  # Ignore migrations (unless your team needs them)
+prisma/dev.db       # Ignore SQLite dev database
+prisma/dev.db-journal
