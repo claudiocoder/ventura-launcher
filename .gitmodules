@@ -7,3 +7,6 @@
 [submodule "ventura-ui"]
 	path = ventura-ui
 	url = git@github.com:claudiocoder/ventura-ui.git
+[submodule "ventura-post"]
+	path = ventura-post
+	url = git@github.com:claudiocoder/ventura-post.git
